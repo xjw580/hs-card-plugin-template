@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.xjw580.Hearthstone-Script</groupId>
+        <artifactId>hs-script</artifactId>
+        <version>v4.8.0.1</version>
+    </parent>
+
+    <groupId>com.github.xjw580</groupId>
+    <artifactId>hs-card-plugin-template</artifactId>
+    <version>1.0.0</version>
+
+    <name>hs-card-plugin-template</name>
+
+    <repositories>
+        <repository>
+            <id>mavenCentral</id>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <kotlin.code.style>official</kotlin.code.style>
+        <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
+
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+
+        <strategy-sdk-version>${hs-script-strategy-sdk-version}</strategy-sdk-version>
+        <card-sdk-version>${hs-script-card-sdk-version}</card-sdk-version>
+    </properties>
+
+    <build>
+        <finalName>${artifactId}</finalName>
+        <sourceDirectory>src/main/kotlin</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources-filtered</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin-version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-version-class</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/generated-sources/version</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <!--todo 包名换成自己的，减少冲突的概率-->
+                                    <directory>src/main/resources-filtered/club/xiaojiawei/cardplugintemplate
+                                    </directory>
+                                    <includes>
+                                        <include>VersionInfo.java</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!--策略SDK-->
+        <dependency>
+            <groupId>com.github.xjw580</groupId>
+            <artifactId>hs-script-strategy-sdk</artifactId>
+            <version>${strategy-sdk-version}</version>
+        </dependency>
+        <!--卡牌SDK-->
+        <dependency>
+            <groupId>com.github.xjw580</groupId>
+            <artifactId>hs-script-card-sdk</artifactId>
+            <version>${card-sdk-version}</version>
+        </dependency>
+    </dependencies>
+
+</project>
